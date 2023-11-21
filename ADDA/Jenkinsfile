@@ -1,10 +1,6 @@
 pipeline {
     agent any
 
-    environment {
-        MVN_HOME = 'C:\\Program Files\\apache-maven-3.9.5'
-    }
-
     stages {
         stage('Checkout') {
             steps {
@@ -15,12 +11,11 @@ pipeline {
         stage('Build') {
             steps {
                 script {
-                    // Setting the PATH to include Maven
-                    def mavenHome = tool name: 'Maven', type: 'maven'
-                    env.PATH = "${mavenHome}\\bin;${env.PATH}"
-
-                    // Running Maven build commands
-                    bat "mvn clean install"
+                    // Change into the ADDA directory
+                    dir('ADDA') {
+                        // Run Maven build commands using Maven Wrapper
+                        bat "mvn clean install"
+                    }
                 }
             }
         }
