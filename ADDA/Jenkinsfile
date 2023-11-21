@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+    environment {
+        MVN_HOME = 'C:\\Program Files\\apache-maven-3.9.5'
+    }
+
     stages {
         stage('Checkout') {
             steps {
@@ -11,8 +15,12 @@ pipeline {
         stage('Build') {
             steps {
                 script {
-                    def mvnHome = tool 'Maven'
-                    sh "C:/Program Files/apache-maven-3.9.5/bin/mvn clean install"
+                    // Setting the PATH to include Maven
+                    def mavenHome = tool name: 'Maven', type: 'maven'
+                    env.PATH = "${mavenHome}\\bin;${env.PATH}"
+
+                    // Running Maven build commands
+                    bat "mvn clean install"
                 }
             }
         }
