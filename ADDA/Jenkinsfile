@@ -12,7 +12,7 @@ pipeline {
             steps {
                 script {
                     def mvnHome = tool 'Maven'
-                    sh "${mvnHome}/bin/mvn clean install"
+                    sh "C:/Program Files/apache-maven-3.9.5/bin/mvn clean install"
                 }
             }
         }
